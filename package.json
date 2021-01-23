@@ -4,12 +4,12 @@
   "description": "afternoon lab",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
-    "dev":"nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^5.0.10"
+    "mongoose": "^5.11.13"
   }
 }
