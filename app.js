@@ -40,7 +40,6 @@ const newVampire = [
     loves: ["cereal", "marshmallows"],
     location: "Minneapolis, Minnesota, US",
     gender: "f",
-    victims: 0,
   },
   {
     name: "Chocula",
@@ -123,12 +122,139 @@ Vampire.insertMany(newVampire, (err, vampires) => {
 // });
 
 // have greater than 150 AND fewer than 500 victims
-Vampire.find({ victims: { $gt: 150, $lt: 500 } }, (err, victims) => {
-  if (err) {
-    console.log(err);
-  }
-  console.log(
-    "The vampires have greater than 150 AND fewer than 500 victims are: ",
-    victims
-  );
-});
+// Vampire.find({ victims: { $gt: 150, $lt: 500 } }, (err, victims) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(
+//     "The vampires have greater than 150 AND fewer than 500 victims are: ",
+//     victims
+//   );
+//   mongoose.connection.close()
+// });
+
+// Select by exists or does not exist
+// have a key of 'title'
+// Vampire.find({ title: { $exists: true } }, (err, existsTitle) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(existsTitle);
+//   mongoose.connection.close();
+// });
+
+// do not have a key of 'victims'
+// Vampire.find({ victims: { $exists: false } }, (err, existsVictims) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log("victims", existsVictims);
+//   mongoose.connection.close();
+// });
+
+// have a title AND no victims
+// Vampire.find(
+//   { title: { $exists: true }, victims: { $exists: false } },
+//   (err, exists) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log("victims", exists);
+//     mongoose.connection.close();
+//   }
+// );
+
+// have victims AND the victims they have are greater than 1000
+// Vampire.find(
+//   { victims: { $exists: true ,$gt:1000} },
+//   (err, exists) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(" ", exists);
+//     mongoose.connection.close();
+//   }
+// );
+
+// Select with OR
+// are from New York, New York, US or New Orleans, Louisiana, US
+// Vampire.find(
+//   {
+//     $or: [
+//       { location: "New York, New York, US" },
+//       { location: "New Orleans, Louisiana, US" },
+//     ],
+//   },
+//   (err, or) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log("from New York, or New Orleans ", or);
+//     mongoose.connection.close();
+//   }
+// );
+
+// love brooding or being tragic
+// Vampire.find(
+//   { $or: [{ loves: "brooding" }, { love: "being tragic" }] },
+//   (err, love) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log("loves: ", love);
+//     mongoose.connection.close();
+//   }
+// );
+
+// have more than 1000 victims or love marshmallows
+// Vampire.find(
+//   { $or: [{ victims: { $gr: 1000 } }, { loves: "marshmallows" }] },
+//   (err, or) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(or);
+//     mongoose.connection.close();
+//   }
+// );
+
+// have red hair or green eyes
+// Vampire.find(
+//   { $or: [{ hair_color: "red" }, { eye_color: "green" }] },
+//   (err, or) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(or);
+//     mongoose.connection.close();
+//   }
+// );
+
+
+// Select objects that match one of several values
+// love either frilly shirtsleeves or frilly collars
+// love brooding
+// love at least one of the following: appearing innocent, trickery, lurking in rotting mansions, R&B music
+// love fancy cloaks but not if they also love either top hats or virgin blood _ Hint-You will also have to use $nin _
+
+// Negative Selection
+// love ribbons but do not have brown eyes
+// are not from Rome
+// do not love any of the following: [fancy cloaks, frilly shirtsleeves, appearing innocent, being tragic, brooding]
+// have not killed more than 200 people
+
+// Replace
+// replace the vampire called 'Claudia' with a vampire called 'Eve'. 'Eve' will have a key called 'portrayed_by' with the value 'Tilda Swinton'
+// replace the first male vampire with another whose name is 'Guy Man', and who has a key 'is_actually' with the value 'were-lizard'
+
+// Update
+// Update 'Guy Man' to have a gender of 'f'
+// Update 'Eve' to have a gender of 'm'
+// Update 'Guy Man' to have an array called 'hates' that includes 'clothes' and 'jobs'
+// Update 'Guy Man's' hates array also to include 'alarm clocks' and 'jackalopes'
+// Rename 'Eve's' name field to 'moniker'
+// We now no longer want to categorize female gender as "f", but rather as fems. Update all females so that the they are of gender "fems".
+
+// Remove
+// Remove a single document wherein the hair_color is 'brown'
+// We found out that the vampires with the blue eyes were just fakes! Let's remove all the vampires who have blue eyes from our database.
