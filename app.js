@@ -113,11 +113,11 @@ Vampire.insertMany(newVampire, (err, vampires) => {
 // });
 
 // have a victim count is not equal to 210234
-// Vampire.find({ victims: 210234 }, (err, victims) => {
+// Vampire.find({ victims: { $ne: 210234 } }, (err, victims) => {
 //   if (err) {
 //     console.log(err);
 //   }
-//   console.log("The vampire havee 210234 victims are: ", victims);
+//   console.log("The vampire not havee 210234 victims are: ", victims);
 //   mongoose.connection.close();
 // });
 
@@ -230,12 +230,62 @@ Vampire.insertMany(newVampire, (err, vampires) => {
 //   }
 // );
 
-
 // Select objects that match one of several values
 // love either frilly shirtsleeves or frilly collars
+// Vampire.find(
+//   { loves: { $in: ['frilly shirtsleeves', 'frilly collars'] } },
+//   (err, loves) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(loves);
+//     mongoose.connection.close();
+//   }
+// );
+
 // love brooding
+// Vampire.find({ loves: { $in: ["brooding"] } }, (err, love) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(love);
+//   mongoose.connection.close();
+// });
+
 // love at least one of the following: appearing innocent, trickery, lurking in rotting mansions, R&B music
+// Vampire.find(
+//   {
+//     loves: {
+//       $in: [
+//         "appearing innocent",
+//         "trickery",
+//         "lurking in rotting mansions", "R&B music"
+//       ],
+//     },
+//   },
+//   (err, loves) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(loves);
+//     mongoose.connection.close();
+//   }
+// );
+
 // love fancy cloaks but not if they also love either top hats or virgin blood _ Hint-You will also have to use $nin _
+
+Vampire.find(
+  {
+    loves: { $in: ["fancy cloaks"], $nin: ["top hats", "virgin blood"] },
+  },
+  (err, loves) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(loves);
+    mongoose.connection.close();
+  }
+);
 
 // Negative Selection
 // love ribbons but do not have brown eyes
