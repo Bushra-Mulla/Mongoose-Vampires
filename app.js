@@ -273,23 +273,34 @@ Vampire.insertMany(newVampire, (err, vampires) => {
 // );
 
 // love fancy cloaks but not if they also love either top hats or virgin blood _ Hint-You will also have to use $nin _
-
-Vampire.find(
-  {
-    loves: { $in: ["fancy cloaks"], $nin: ["top hats", "virgin blood"] },
-  },
-  (err, loves) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(loves);
-    mongoose.connection.close();
-  }
-);
+// Vampire.find(
+//   {
+//     loves: { $in: ["fancy cloaks"], $nin: ["top hats", "virgin blood"] },
+//   },
+//   (err, loves) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(loves);
+//     mongoose.connection.close();
+//   }
+// );
 
 // Negative Selection
 // love ribbons but do not have brown eyes
+// Vampire.find(
+//   { $and: [{ loves: { $in: ["ribbons"] } }, { eye_color: { $not: { $eq: "brown" }} }] },
+//   (err, loves) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(loves);
+//     mongoose.connection.close();
+//   }
+// );
+
 // are not from Rome
+
 // do not love any of the following: [fancy cloaks, frilly shirtsleeves, appearing innocent, being tragic, brooding]
 // have not killed more than 200 people
 
