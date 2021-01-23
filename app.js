@@ -29,7 +29,7 @@ Vampire.insertMany(seedData, (err, vampires) => {
   if (err) {
     console.log(err);
   }
-  // console.log("added provided vampire data", vampires);
+  console.log("added provided vampire data", vampires);
   mongoose.connection.close();
 });
 const newVampire = [
@@ -78,7 +78,7 @@ Vampire.insertMany(newVampire, (err, vampires) => {
   if (err) {
     console.log(err);
   }
-  // console.log("added provided vampire data", vampires);
+  console.log("added provided vampire data", vampires);
   mongoose.connection.close();
 });
 
@@ -289,7 +289,7 @@ Vampire.insertMany(newVampire, (err, vampires) => {
 // Negative Selection
 // love ribbons but do not have brown eyes
 // Vampire.find(
-//   { $and: [{ loves: { $in: ["ribbons"] } }, { eye_color: { $not: { $eq: "brown" }} }] },
+//   { $and: [{ loves: { $in: ["ribbons"] } }, { eye_color: { $ne: "brown" } }] },
 //   (err, loves) => {
 //     if (err) {
 //       console.log(err);
@@ -300,22 +300,147 @@ Vampire.insertMany(newVampire, (err, vampires) => {
 // );
 
 // are not from Rome
+// Vampire.find({ location: { $ne: "Rome" } }, (err, notFromRpme) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(notFromRpme);
+//   mongoose.connection.close();
+// });
 
 // do not love any of the following: [fancy cloaks, frilly shirtsleeves, appearing innocent, being tragic, brooding]
+// Vampire.find(
+//   {
+//     loves: {$ne: {$in: ["fancy cloaks","frilly shirtsleeves","appearing innocent","being tragic","brooding"]}}},
+//   (err, loves) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(loves);
+//     mongoose.connection.close();
+//   }
+// );
+
 // have not killed more than 200 people
+// db.inventory.find({ price: { $not: { $gt: 1.99 } } });
+// Vampire.find({ victims: { $not: { $gt: 200 } } }, (err, victims) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(victims);
+//   mongoose.connection.close();
+// });
 
-// Replace
+// Replace //findOneAndReplace
 // replace the vampire called 'Claudia' with a vampire called 'Eve'. 'Eve' will have a key called 'portrayed_by' with the value 'Tilda Swinton'
-// replace the first male vampire with another whose name is 'Guy Man', and who has a key 'is_actually' with the value 'were-lizard'
+// Vampire.findOneAndReplace(
+//   { name: "Claudia" },
+//   { $set: { name: "Eve", portrayed_by: "Tilda Swinton" } },
+//   (err, replace) => {
+//     if (err) {
+//       console.log("err", err);
+//     }
+//     console.log(replace);
+//     mongoose.connection.close();
+//   }
+// );
 
-// Update
+// replace the first male vampire with another whose name is 'Guy Man', and who has a key 'is_actually' with the value 'were-lizard'
+// Vampire.findOneAndReplace(
+//   { gender: "m" },
+//   { name: "Guy Man", is_actually: "were-lizard" },
+//   (err, replace) => {
+//     if (err) {
+//       console.log("err", err);
+//     }
+//     console.log(replace);
+//     mongoose.connection.close();
+//   }
+// );
+
+// Update findOneAndUpdate
 // Update 'Guy Man' to have a gender of 'f'
+// Vampire.findOneAndUpdate(
+//   { name: "Guy Man" },
+//   { gender: "f" },
+//   (err, update) => {
+//     if (err) {
+//       console.log("err", err);
+//     }
+//     console.log(update);
+//     mongoose.connection.close();
+//   }
+// );
+
 // Update 'Eve' to have a gender of 'm'
+// Vampire.findOneAndUpdate({ name: "Eve" }, { gender: "m" }, (err, update) => {
+//   if (err) {
+//     console.log("err", err);
+//   }
+//   console.log(update);
+//   mongoose.connection.close();
+// });
 // Update 'Guy Man' to have an array called 'hates' that includes 'clothes' and 'jobs'
+// Vampire.findOneAndUpdate(
+//   { name: "Guy Man" },
+//   { hates: ["clothes", "jobs"] },
+//   (err, update) => {
+//     if (err) {
+//       console.log("err", err);
+//     }
+//     console.log(update);
+//     mongoose.connection.close();
+//   }
+// );
+
 // Update 'Guy Man's' hates array also to include 'alarm clocks' and 'jackalopes'
+// Vampire.findOneAndUpdate(
+//   { name: "Guy Man" },
+//   { $push: { hates: { $each: ["alarm clocks", "jackalopes"] }} },
+//   (err, update) => {
+//     if (err) {
+//       console.log("err", err);
+//     }
+//     console.log(update);
+//     mongoose.connection.close();
+//   }
+// );
+
 // Rename 'Eve's' name field to 'moniker'
+// Vampire.findOneAndUpdate(
+//   { name: "Eve" },
+//   { name: "moniker" },
+//   (err, update) => {
+//     if (err) {
+//       console.log("err", err);
+//     }
+//     console.log(update);
+//     mongoose.connection.close();
+//   }
+// );
 // We now no longer want to categorize female gender as "f", but rather as fems. Update all females so that the they are of gender "fems".
+// Vampire.updateMany({ gender: "f" }, { gender: "fems" }, (err, update) => {
+//   if (err) {
+//     console.log("err", err);
+//   }
+//   console.log(update);
+//   mongoose.connection.close();
+// });
 
 // Remove
 // Remove a single document wherein the hair_color is 'brown'
+Vampire.findOneAndRemove({ hair_color: "brown" }, (err, vampire) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(vampire);
+  }
+});
 // We found out that the vampires with the blue eyes were just fakes! Let's remove all the vampires who have blue eyes from our database.
+Vampire.remove({ eye_color: "blue" }, (err, vampire) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(vampire);
+  }
+});
